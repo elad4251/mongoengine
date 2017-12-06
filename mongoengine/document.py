@@ -148,6 +148,9 @@ class Document(BaseDocument):
 
     __slots__ = ('__objects',)
 
+    def __hash__(self):
+        return super(Document, self).__hash__(warn=False)
+
     @property
     def pk(self):
         """Get the primary key."""
