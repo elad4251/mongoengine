@@ -273,7 +273,11 @@ class BaseDocument(object):
     def __ne__(self, other):
         return not self.__eq__(other)
 
-    def __hash__(self):
+    def __hash__(self, warn=True):
+        if warn:
+            from fundbox.common.logging import get_logger
+            import traceback
+            get_logger().warn("mongoenging cannot hash obj {} class {}\n{}".format(self, self.__class__.__name__, "".join(traceback.format_stack())))
         if getattr(self, 'pk', None) is None:
             # For new object
             return super(BaseDocument, self).__hash__()
